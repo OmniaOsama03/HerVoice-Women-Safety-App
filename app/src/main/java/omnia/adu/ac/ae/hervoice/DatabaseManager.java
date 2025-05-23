@@ -1,5 +1,6 @@
 package omnia.adu.ac.ae.hervoice;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import android.content.Context;
@@ -69,22 +70,34 @@ public class DatabaseManager extends SQLiteOpenHelper
     }
 
     //Register new user
-    public void registerUser(String email, String password) {
+    public boolean registerUser(String email, String password) {
         //Hash the password
         String hashedPassword = hashPassword(password);
 
         //Open the database for writing
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //Construct the string that holds the SQL statement
-        String sqlInsert = "INSERT INTO User values(null, '" + email + "', " + hashedPassword + ")";
+        ContentValues cv = new ContentValues();
 
-        //Execute the statement
-        db.execSQL(sqlInsert);
+        cv.put("email", email);
+        cv.put("password_hash", password);
+
+        long insert = db.insert("User",null,cv);
+        if (insert ==-1)
+            return false;
+        else
+            return true;
+
+
+        //Construct the string that holds the SQL statement (OMNIA IS IT OK TO REMOVE THIS LINE?)
+        //String sqlInsert = "INSERT INTO User values(null, '" + email + "', " + hashedPassword + ")";
+
+        //Execute the statement (OMNIA CAN I REMOVE THIS LINE TOO?)
+        //db.execSQL(sqlInsert);
 
 
         //Close the db to avoid keeping it vulnerable
-        db.close();
+        //db.close();
 
     }
 
