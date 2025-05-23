@@ -1,41 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    android:padding="24dp"
+    android:background="#FFFFFF">
 
+    <!-- Email Label -->
     <TextView
+        android:id="@+id/emailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Hello Sabrinaaa! :D"
-        android:textSize="10dp"
-        android:textColor="@color/black"/>
+        android:text="Email:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
-    <com.google.android.material.appbar.AppBarLayout
+    <!-- Email Input -->
+    <EditText
+        android:id="@+id/emailInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:layout_below="@id/emailLabel"
+        android:inputType="textEmailAddress"
+        android:hint="Enter your email" />
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/content_main" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <!-- Email Validation -->
+    <TextView
+        android:id="@+id/emailValidation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_below="@id/emailInput"
+        android:textColor="#3F51B5"
+        android:textSize="12sp"/>
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <!-- Password Label -->
+    <TextView
+        android:id="@+id/passwordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailValidation"
+        android:layout_marginTop="16dp"
+        android:text="Password:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Password Input -->
+    <EditText
+        android:id="@+id/passwordInput"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordLabel"
+        android:inputType="textPassword"
+        android:hint="Enter your password" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!-- Password Validation -->
+    <TextView
+        android:id="@+id/passwordValidation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordInput"
+        android:textColor="#3F51B5"
+        android:textSize="12sp" />
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordValidation"
+        android:layout_marginTop="24dp"
+        android:text="Login"
+        android:enabled="false" />
+
+    <!-- Prompt TextView -->
+    <TextView
+        android:id="@+id/registerPromptText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginButton"
+        android:layout_marginTop="16dp"
+        android:text="Don't have an account?"
+        android:textSize="14sp"
+        android:textColor="#000000" />
+
+    <!-- "Register here" Button -->
+    <!--only way background color will be added is through Tint-->
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/registerPromptText"
+        android:layout_alignBaseline="@id/registerPromptText"
+        android:backgroundTint="@android:color/white"
+        android:textColor="#0066CC"
+        android:textSize="14sp"
+        android:text="Register here"
+        android:padding="0dp"/>
+</RelativeLayout>
