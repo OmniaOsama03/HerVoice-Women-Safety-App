@@ -6,9 +6,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home page"
+        android:text="Accounts"
         android:layout_centerInParent="true"/>
-
 
     <fragment
         android:id="@+id/bottomNavFragment"

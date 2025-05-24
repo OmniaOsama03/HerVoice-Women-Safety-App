@@ -13,17 +13,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import omnia.adu.ac.ae.hervoice.databinding.ActivityHomePageBinding;
+import omnia.adu.ac.ae.hervoice.databinding.ActivityPostBinding;
 
-public class HomePageActivity extends AppCompatActivity {
-    private ActivityHomePageBinding binding;
+public class PostActivity extends AppCompatActivity {
+    private ActivityPostBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityHomePageBinding.inflate(getLayoutInflater());
+        binding = ActivityPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-    }
 
+    }
 }

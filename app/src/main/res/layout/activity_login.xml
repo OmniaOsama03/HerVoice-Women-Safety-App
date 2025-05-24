@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@drawable/login">
+
+    <!-- Email Label -->
+    <TextView
+        android:id="@+id/emailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginTop="380dp"/>
+
+    <!-- Email Input -->
+    <EditText
+        android:id="@+id/emailInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailLabel"
+        android:inputType="textEmailAddress"
+        android:hint="Enter your email" />
+
+    <!-- Email Validation -->
+    <TextView
+        android:id="@+id/emailValidation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailInput"
+        android:textColor="@color/white"
+        android:textSize="12sp"/>
+
+    <!-- Password Label -->
+    <TextView
+        android:id="@+id/passwordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailValidation"
+        android:layout_marginTop="16dp"
+        android:text="Password:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
+
+    <!-- Password Input -->
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordLabel"
+        android:inputType="textPassword"
+        android:hint="Enter your password" />
+
+    <!-- Password Validation -->
+    <TextView
+        android:id="@+id/passwordValidation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordInput"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordValidation"
+        android:backgroundTint="#232268"
+        android:textColor="@color/white"
+        android:layout_marginTop="24dp"
+        android:text="Login" />
+
+    <!-- Prompt TextView -->
+    <TextView
+        android:id="@+id/registerPromptText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginButton"
+        android:layout_marginTop="16dp"
+        android:text="Don't have an account?"
+        android:textSize="14sp"
+        android:textColor="#000000" />
+
+    <!-- "Register here" Button -->
+    <!--only way background color will be added is through Tint-->
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/registerPromptText"
+        android:layout_alignBaseline="@id/registerPromptText"
+        android:backgroundTint="#6A77C8"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:text="Register here"
+        android:textStyle="bold"
+        android:paddingVertical="0dp"
+        android:paddingHorizontal="5dp"/>
+</RelativeLayout>
