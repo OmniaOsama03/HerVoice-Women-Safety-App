@@ -72,7 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
                 {
                     Toast.makeText(RegisterActivity.this, "Account created successful!", Toast.LENGTH_SHORT).show();
 
-                    Intent i = new Intent(RegisterActivity.this, Otp.class);
+                    Intent i = new Intent(RegisterActivity.this, OTPActivity.class);
+                    i.putExtra("email", email);
                     startActivity(i);
 
                     finish();
