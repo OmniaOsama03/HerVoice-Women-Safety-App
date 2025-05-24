@@ -19,16 +19,51 @@
         android:textStyle="bold"/>
 
 
+    <!--    First Name & Last Name Label-->
+    <TextView
+        android:id="@+id/registerFullNameTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter First and Last Name:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/signupTV"
+        android:layout_marginTop="30dp"/>
+
+
+    <!-- First name Input -->
+    <EditText
+        android:id="@+id/registerFisrtNameET"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/registerFullNameTV"
+        android:hint="First name"
+        android:layout_marginTop="5dp"/>
+
+
+    <!-- Last name Input -->
+    <EditText
+        android:id="@+id/registerLastNameET"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/registerFullNameTV"
+        android:layout_toRightOf="@id/registerFisrtNameET"
+        android:layout_marginLeft="30dp"
+        android:hint="Last name"
+        android:layout_marginTop="5dp"/>
+
+
 <!--    Email Label-->
     <TextView
         android:id="@+id/registerEmailTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter email address"
+        android:text="Enter email address:"
         android:textColor="@color/black"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_below="@+id/signupTV"
+        android:layout_below="@+id/registerFisrtNameET"
         android:layout_marginTop="30dp"/>
 
 
@@ -65,14 +100,15 @@
         android:textStyle="bold" />
 
 
-    <!-- Password Input -->
+    <!-- Password Input (enabled false)-->
     <EditText
         android:id="@+id/registerPasswordET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/registerPasswordTV"
         android:inputType="textPassword"
-        android:hint="Enter your password" />
+        android:hint="Enter your password"
+        android:enabled="false"/>
 
 
     <!-- Password Validation -->
@@ -97,14 +133,15 @@
         android:textStyle="bold" />
 
 
-    <!-- Confirm Password Input -->
+    <!-- Confirm Password Input (enabled false)-->
     <EditText
         android:id="@+id/confirmPasswordET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/confirmPasswordTV"
         android:inputType="textPassword"
-        android:hint="Retype password" />
+        android:hint="Retype password"
+        android:enabled="false"/>
 
 
     <!-- Confirm Password Validation -->
@@ -128,25 +165,23 @@
         android:enabled="false" />
 
 
-
-
 <!--    TV for picture-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/black"/>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:background="@color/black"/>-->
 
 
 <!--    Picture-->
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/logo"
-        android:layout_below="@id/confirmPasswordValidation"
+        android:layout_below="@id/registerButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="125dp"/>
+        android:layout_marginTop="20dp"/>
 
 
 <!--    Motto-->
@@ -155,10 +190,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
-        android:layout_marginTop="5dp"
         android:text="Your space. Your story. Your voice"
-        android:textSize="20dp"
-        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textColor="@color/black"
         android:textStyle="italic"
         android:layout_centerHorizontal="true"/>
 

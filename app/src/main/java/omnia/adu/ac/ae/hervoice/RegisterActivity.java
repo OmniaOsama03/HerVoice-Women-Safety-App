@@ -19,9 +19,12 @@ import androidx.core.view.WindowInsetsCompat;
 public class RegisterActivity extends AppCompatActivity {
 
     TextView registerEmailValidation, registerPasswordValidation, confirmPasswordValidation;
-    EditText registerEmailET, registerPasswordET, confirmPasswordET;
+    EditText registerFirstNameET, registerLastNameET, registerEmailET, registerPasswordET, confirmPasswordET;
     Button registerButton;
 
+    String email;
+    String password;
+    String confirmPassword;
     boolean isEmailValid = false;
     boolean isPasswordValid = false;
 
@@ -34,29 +37,33 @@ public class RegisterActivity extends AppCompatActivity {
         registerEmailValidation = findViewById(R.id.registerEmailValidation);
         registerPasswordValidation = findViewById(R.id.registerPasswordValidation);
         confirmPasswordValidation = findViewById(R.id.confirmPasswordValidation);
+
+        registerFirstNameET = findViewById(R.id.registerFisrtNameET);
+        registerLastNameET = findViewById(R.id.registerLastNameET);
         registerEmailET = findViewById(R.id.registerEmailET);
         registerPasswordET = findViewById(R.id.registerPasswordET);
         confirmPasswordET = findViewById(R.id.confirmPasswordET);
         registerButton = findViewById(R.id.registerButton);
 
         //Text watchers
-        registerEmailET.addTextChangedListener(new RegisterActivity.EmailWatcher());
-        registerPasswordET.addTextChangedListener(new RegisterActivity.PasswordWatcher());
+        registerEmailET.addTextChangedListener(new EmailWatcher());
+        registerPasswordET.addTextChangedListener(new PasswordWatcher());
+        confirmPasswordET.addTextChangedListener(new PasswordMatchWatcher());
 
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String email = registerEmailET.getText().toString().trim();
-                String password = registerPasswordET.getText().toString().trim();
+                //String password = registerPasswordET.getText().toString().trim();
+                //String confirmPassword = confirmPasswordET.getText().toString().trim();
 
                 //Ensuring neither email nor password have '
-                if (email.contains("'") || password.contains("'"))
-                {
-                    Toast.makeText(RegisterActivity.this, "Invalid character: ' not allowed", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                if (email.contains("'") || password.contains("'"))
+//                {
+//                    Toast.makeText(RegisterActivity.this, "Invalid character: ' not allowed", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
 
                 DatabaseManager db = DatabaseManager.getInstance(RegisterActivity.this);
                 boolean success = db.registerUser(email, password);
@@ -70,11 +77,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                     finish();
 
-                } else
-                {
-                    registerPasswordValidation.setText("Incorrect email or password :(");
-                    registerPasswordValidation.setTextColor(getResources().getColor(R.color.deep_red));
                 }
+//                else
+//                {
+//                    registerPasswordValidation.setText("Incorrect email or password :(");
+//                    registerPasswordValidation.setTextColor(getResources().getColor(R.color.deep_red));
+//                }
             }
         });
 
@@ -92,20 +100,23 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s)
         {
-            String email = s.toString().trim();
+            email = registerEmailET.getText().toString().trim();
 
             if (!email.contains("@") || email.contains("'"))
             {
                 registerEmailValidation.setText("Invalid email.");
+                registerPasswordET.setEnabled(false);
                 isEmailValid = false;
             } else {
                 registerEmailValidation.setText("");
+                registerPasswordET.setEnabled(true);
                 isEmailValid = true;
             }
 
-            registerButton.setEnabled(isEmailValid && isPasswordValid);
+            //registerButton.setEnabled(isEmailValid && isPasswordValid);
         }
     }
+
 
     // Password validation watcher
     private class PasswordWatcher implements TextWatcher {
@@ -115,20 +126,55 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s)
         {
-            String password = s.toString();
+            password = registerPasswordET.getText().toString().trim();
 
             if (!isPasswordValid(password))
             {
                 registerPasswordValidation.setText("Invalid password.");
+                registerPasswordValidation.setTextColor(getResources().getColor(R.color.deep_red));
+                confirmPasswordET.setEnabled(false);
                 isPasswordValid = false;
             } else {
                 registerPasswordValidation.setText("");
+                confirmPasswordET.setEnabled(true);
                 isPasswordValid = true;
             }
 
-            registerButton.setEnabled(isEmailValid && isPasswordValid);
+            //registerButton.setEnabled(isEmailValid && isPasswordValid);
         }
     }
+
+
+    //password validation confirm watcher
+    class PasswordMatchWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            String localPass1 = registerPasswordET.getText().toString();
+            confirmPassword = confirmPasswordET.getText().toString().trim();
+
+            if (localPass1.equals(confirmPassword)) {
+                registerButton.setEnabled(true);
+                confirmPasswordValidation.setText("");
+            } else {
+                confirmPasswordValidation.setText("PASSWORDS MUST MATCH");
+                confirmPasswordValidation.setTextColor(getResources().getColor(R.color.deep_red));
+                registerButton.setEnabled(false);
+            }
+        }
+    }
+
+
 
     //Password rules
     private boolean isPasswordValid(String password) {
