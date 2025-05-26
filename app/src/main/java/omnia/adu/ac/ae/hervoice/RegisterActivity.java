@@ -89,7 +89,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
+    public void goToLogin(View v)
+    {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 
 
     // Email validation watcher
