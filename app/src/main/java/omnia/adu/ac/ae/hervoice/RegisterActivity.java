@@ -99,7 +99,13 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Error creating a User", Toast.LENGTH_LONG).show();
                 }
 
+
                 if(member != null) {
+
+                    Intent i = new Intent(RegisterActivity.this, OTPActivity.class);
+                    i.putExtra("email", email);
+                    startActivity(i);
+
 
                     DatabaseManager db = DatabaseManager.getInstance(RegisterActivity.this);
                     boolean success = db.registerUser(member);
@@ -124,7 +130,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
+    public void goToLogin(View v)
+    {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 
     // Age validation watcher
     private class AgeWatcher implements TextWatcher

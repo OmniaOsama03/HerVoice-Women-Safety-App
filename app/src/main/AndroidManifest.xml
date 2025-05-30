@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,11 +13,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HerVoice"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
+
         <activity
-            android:name=".IncidentActivity"
+
+            android:name=".OTPActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostActivity"
             android:exported="false"
             android:theme="@style/Theme.HerVoice" />
+        <activity
+            android:name=".AccountActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HerVoice" />
+        <activity
+            android:name=".AnalyticsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HerVoice" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />

@@ -6,18 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
-    android:layout_margin="24dp">
+    android:background="@drawable/register">
 
-
-    <TextView
-        android:id="@+id/signupTV"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        android:textStyle="bold"/>
-
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:text="back"
+        android:backgroundTint="#413F8C"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="15dp"
+        android:textSize="17sp"
+        android:textStyle=""
+        android:onClick="goToLogin"/>
 
     <!--    First Name & Last Name Label-->
     <TextView
@@ -25,11 +29,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enter First and Last Name:"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:layout_below="@+id/backButton"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_below="@+id/signupTV"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="250dp"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- First name Input -->
@@ -39,7 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/registerFullNameTV"
         android:hint="First name"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Last name Input -->
@@ -49,9 +55,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/registerFullNameTV"
         android:layout_toRightOf="@id/registerFisrtNameET"
-        android:layout_marginLeft="30dp"
         android:hint="Last name"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"/>
 
 
 <!--    Age label-->
@@ -147,11 +153,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enter email address:"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold"
         android:layout_below="@+id/cityRG"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="20dp"/>
+
 
 
     <!-- Email Input ENABLED FALSE-->
@@ -162,7 +170,9 @@
         android:layout_below="@id/registerEmailTV"
         android:inputType="textEmailAddress"
         android:hint="example@email.com"
-        android:enabled="false"/>
+        android:enabled="false"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Email Validation -->
@@ -171,8 +181,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/registerEmailET"
-        android:textColor="#3F51B5"
-        android:textSize="12sp"/>
+        android:textColor="#50000B"
+        android:textSize="12sp"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Password Label -->
@@ -184,7 +195,8 @@
         android:layout_marginTop="10dp"
         android:text="Create a password:"
         android:textSize="18dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Password Input (enabled false)-->
@@ -195,7 +207,8 @@
         android:layout_below="@id/registerPasswordTV"
         android:inputType="textPassword"
         android:hint="Enter your password"
-        android:enabled="false"/>
+        android:enabled="false"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Password Validation -->
@@ -204,8 +217,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/registerPasswordET"
-        android:textColor="#3F51B5"
-        android:textSize="12sp" />
+        android:textColor="#50000B"
+        android:textSize="12sp"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Confirm Password Label -->
@@ -217,7 +231,8 @@
         android:layout_marginTop="10dp"
         android:text="Confirm password:"
         android:textSize="18dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Confirm Password Input (enabled false)-->
@@ -228,7 +243,8 @@
         android:layout_below="@id/confirmPasswordTV"
         android:inputType="textPassword"
         android:hint="Retype password"
-        android:enabled="false"/>
+        android:enabled="false"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Confirm Password Validation -->
@@ -237,8 +253,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/confirmPasswordET"
-        android:textColor="#3F51B5"
-        android:textSize="12sp" />
+        android:textColor="#50000B"
+        android:textSize="12sp"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Register Button -->
@@ -247,9 +264,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/confirmPasswordValidation"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:text="Register"
-        android:enabled="false" />
+        android:enabled="false"
+        android:backgroundTint="#1D1D57"
+        android:layout_marginHorizontal="20dp"/>
 
 
 

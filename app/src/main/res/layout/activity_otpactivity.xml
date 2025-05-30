@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:backgroundTint="@color/white"
+        android:text="Back"
+        android:textStyle="bold"
+        android:textColor="#646464"
+        android:textSize="15sp"
+        android:onClick="goBack"
+        />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/otpTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OTP Verification"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/backButton" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/otpSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter the verification code sent to your email!"
+        android:textSize="14sp"
+        android:layout_below="@id/otpTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
+
+    <!-- OTP Input -->
+    <EditText
+        android:id="@+id/otpInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/otpSubtitle"
+        android:layout_marginTop="24dp"
+        android:hint="Enter 6-digit code"
+        android:inputType="number"
+        android:maxLength="6"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/submitOtpButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/otpInput"
+        android:layout_marginTop="24dp"
+        android:text="Submit"
+        android:onClick="submitOTP"/>
+
+
+    <TextView
+        android:id="@+id/sendAgainTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submitOtpButton"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Didn't receive an OTP? "
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/resendOtpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/white"
+        android:layout_alignBaseline="@id/sendAgainTV"
+        android:layout_toRightOf="@id/sendAgainTV"
+        android:text="Resend"
+        android:textColor="#03A9F4"
+        android:textSize="14sp"
+        android:padding="0dp"
+        android:onClick="resendOTP"/>
+
+</RelativeLayout>
