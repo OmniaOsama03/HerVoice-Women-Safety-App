@@ -3,13 +3,6 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home page"
-        android:layout_centerInParent="true"/>
-
-
     <fragment
         android:id="@+id/bottomNavFragment"
         android:name="omnia.adu.ac.ae.hervoice.BottomNavFragment"
@@ -17,6 +10,50 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
 
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome, ..."
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/postCountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcomeText"
+            android:layout_marginTop="12dp"
+            android:text="You have ... posts"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="50dp"/>
+
+    <Button
+        android:id="@+id/viewPostsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View My Posts"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="100dp"
+        android:layout_below="@id/postCountText"
+        android:onClick="viewAllPosts"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewPostsBtn"
+        android:layout_above="@id/bottomNavFragment">
+
+        <LinearLayout
+            android:id="@+id/postsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp" />
+    </ScrollView>
 
 
 </RelativeLayout>

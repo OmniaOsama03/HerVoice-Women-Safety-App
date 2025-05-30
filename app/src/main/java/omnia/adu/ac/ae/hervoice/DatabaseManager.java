@@ -10,6 +10,8 @@ import android.util.Log;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 //This Class has the following database operations
 //There are 2 Tables - User & Post
@@ -19,7 +21,7 @@ import java.security.NoSuchAlgorithmException;
 public class DatabaseManager extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "HerVoiceDB";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 6;
 
     private static DatabaseManager instance;
 
@@ -62,6 +64,9 @@ public class DatabaseManager extends SQLiteOpenHelper
 
         db.execSQL(createUserTable);
         db.execSQL(createPostTable);
+
+        //Add Sample Posts
+        insertSamplePosts(db);
 
         //Add test user manually                                                                    //*ADD ADMINS BY HARDCODING HERE
 //        String email = "test@gmail.com";
@@ -116,10 +121,25 @@ public class DatabaseManager extends SQLiteOpenHelper
                     cityValue + ");";
 
             db.execSQL(sqlInsert);
-            db.close();
-            return true;
+
+            // Query back the newly inserted user using their email
+            String query = "SELECT id FROM User WHERE email = '" + email + "'";
+            Cursor cursor = db.rawQuery(query, null);
+
+            if (cursor.moveToFirst()) {
+                int userId = cursor.getInt(0);  // Get the 'id' from first column
+                SessionManager.getInstance().setCurrentUserId(userId);
+                cursor.close();
+                db.close();
+                return true;
+            } else {
+                cursor.close();
+                db.close();
+                return false;
+            }
         }
         catch (Exception e) {
+            Log.e("DatabaseManager", "registerUser error: " + e.getMessage());
             db.close();
             return false;
 
@@ -164,7 +184,7 @@ public class DatabaseManager extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         String sqlUpdate = "UPDATE User" +
-                " set fisrt_name = '" + first_name + "', " +
+                " set first_name = '" + first_name + "', " +
                 "last_name = '" + last_name + "',"+
                 "age =" +age+ "," +
                 "email = '" + email + "',"+
@@ -176,9 +196,59 @@ public class DatabaseManager extends SQLiteOpenHelper
         db.close( );
     }
 
+    // Get user's full name by ID
+    public String getUserFullNameById(int id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        String query = "SELECT first_name, last_name FROM User WHERE id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
 
+        String fullName = "";
+        if (cursor.moveToFirst())
+        {
+            fullName = cursor.getString(0) + " " + cursor.getString(1);
+        }
 
+        cursor.close();
+        db.close();
+
+        return fullName;
+    }
+
+    // Get number of posts by user ID
+    public int getPostCountByUserId(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT COUNT(*) FROM Post WHERE user_id = " + userId;
+        Cursor cursor = db.rawQuery(query, null);
+
+        int count = 0;
+        if (cursor.moveToFirst())
+        {
+            count = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return count;
+    }
+
+    // Check if email is already in use
+    public boolean isEmailTaken(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT id FROM User WHERE email = '" + email + "'";
+        Cursor cursor = db.rawQuery(query, null);
+
+        boolean exists = cursor.moveToFirst();
+
+        cursor.close();
+        db.close();
+
+        return exists;
+    }
 
 
     //Database operation: Insert
@@ -190,14 +260,13 @@ public class DatabaseManager extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         try {
-            String title = post.getTitle();
-            String description = post.getDescription();
-            String city = post.getCity();
-            String area = post.getArea();
-            String date = post.getDate();
-            String time = post.getTime();
+            String title = escapeQuotes(post.getTitle());
+            String description = escapeQuotes(post.getDescription());
+            String city = escapeQuotes(post.getCity());
+            String area = escapeQuotes(post.getArea());
+            String date = escapeQuotes(post.getDate());
+            String time = escapeQuotes(post.getTime());
             int id = post.getUserId();
-
 
             String sqlInsert = "INSERT INTO Post values(" +
                     "null, " +
@@ -219,7 +288,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 
         }
 
-
     }
 
 
@@ -232,6 +300,37 @@ public class DatabaseManager extends SQLiteOpenHelper
     //Database operation: Select all
     //for Table: Post
     //for Activity: HomePageActivity
+    public ArrayList<Post> getAllPosts()
+    {
+        ArrayList<Post> posts = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Post", null);
+
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                Post post = new Post(
+                        cursor.getInt(0), // id
+                        cursor.getString(1), // title
+                        cursor.getString(2), // description
+                        cursor.getString(3), // city
+                        cursor.getString(4), // area
+                        cursor.getString(5), // date
+                        cursor.getString(6), // time
+                        cursor.getInt(7)  // user_id
+                );
+
+                posts.add(post);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return posts;
+    }
 
 
 
@@ -269,4 +368,110 @@ public class DatabaseManager extends SQLiteOpenHelper
         }
     }
 
+    //Adding Sample Posts
+    public void insertSamplePosts(SQLiteDatabase db) {
+        List<Post> samplePosts = new ArrayList<>();
+
+        samplePosts.add(new Post(100,   "Uncomfortable Stares at the Bus Stop",
+                "While waiting for the bus near the mall, I noticed a man continuously staring at me. He didn't say anything, but it made me uncomfortable enough to walk away and wait at a different stop.",
+                "Abu Dhabi", "Al Zahiyah", "2025-04-22", "18:45", 1));
+
+        samplePosts.add(new Post(101, "Feeling Followed in the Market",
+                "While shopping in the local market, I had the feeling someone was trailing me aisle to aisle. I changed directions a few times and he still seemed to follow. I left the store quickly.",
+                "Sharjah", "Al Nahda", "2025-05-01", "16:10", 1));
+
+        samplePosts.add(new Post(102, "Loud Comments While Walking",
+                "As I was walking to the metro station, a group of guys made loud comments from across the street. Nothing threatening, but it made me want to avoid that street again.",
+                "Dubai", "Al Rigga", "2025-04-28", "14:25", 1));
+
+        samplePosts.add(new Post(103, "Strange Interaction in the Elevator",
+                "I got into an elevator alone, and a man joined right after. He stood unusually close even though the elevator was empty. He kept glancing at me, which made me very anxious until I reached my floor.",
+                "Abu Dhabi", "Khalidiya", "2025-05-03", "19:05", 1));
+
+        samplePosts.add(new Post(104, "Taxi Ride Made Me Uneasy",
+                "I took a ride with a private taxi driver who asked too many personal questions. He wasn’t rude, but it made me uncomfortable enough to end the ride early.",
+                "Dubai", "Jumeirah", "2025-05-06", "10:15", 1));
+
+        samplePosts.add( new Post(105, "Repeated Encounters Near My Office",
+                "There’s a man I keep seeing around my office area, often standing near the building's entrance when I leave work. He hasn’t approached me, but it feels too frequent to be coincidence.",
+                "Sharjah", "Al Majaz", "2025-04-29", "17:30", 1));
+
+        samplePosts.add(new Post(106, "Comment While Jogging",
+                "While jogging in the park, someone passing by made a comment about my outfit. It wasn’t aggressive, but it made me feel self-conscious and I cut my run short.",
+                "Al Ain", "Al Jimi", "2025-05-07", "07:00", 1));
+
+        samplePosts.add(new Post(107, "Feeling Watched on the Metro",
+                "During my metro ride, I noticed a man watching me constantly. He even moved seats to sit closer when the train wasn’t full. I got off two stops early to avoid further discomfort.",
+                "Dubai", "BurJuman", "2025-05-05", "09:40", 1));
+
+        samplePosts.add(new Post(108, "Uncomfortable Stares",
+                "While waiting at the bus stop in Khalifa City, I noticed a man staring for an uncomfortably long time. He didn't say anything, but it made me feel unsafe.",
+                "Abu Dhabi", "Khalifa City", "2024-11-10", "17:30", 1));
+
+        samplePosts.add(new Post(109, "Taxi Driver Comments",
+                "The driver kept asking personal questions and commenting on my appearance. I felt trapped since I was alone in the car.",
+                "Abu Dhabi", "Al Wahda", "2024-12-01", "19:15", 1));
+
+        samplePosts.add(new Post(110,"Crowded Mall Incident",
+                "While shopping at the mall, someone brushed past me too closely multiple times. It felt intentional and made me really uncomfortable.",
+                "Dubai", "Mall of the Emirates", "2025-01-05", "14:20", 1));
+
+        samplePosts.add(new Post(111, "Unwanted Attention",
+                "As I walked to my car in the parking lot, a man started following me while calling out things. I rushed into my car and locked it.",
+                "Sharjah", "Al Majaz", "2025-02-12", "21:45", 1));
+
+        samplePosts.add(new Post(112, "Metro Encounter",
+                "A man stood far too close to me in an almost empty train car. I moved away and he followed until another passenger intervened.",
+                "Dubai", "BurJuman Station", "2025-02-25", "08:10", 1));
+
+        samplePosts.add(new Post(113, "Unsettling Experience",
+                "I was walking near the corniche when a group of men started whispering and pointing. They didn’t approach, but it made me hurry home.",
+                "Abu Dhabi", "Corniche", "2025-03-05", "18:00", 1));
+
+        samplePosts.add(new Post(114, "Weird Interaction",
+                "A stranger tried to get my number at a gas station. He got upset when I refused, and I had to wait for him to drive off before I left.",
+                "Dubai", "Jumeirah", "2025-03-15", "13:45", 1));
+
+        samplePosts.add(new Post(115, "Mall Corridor Encounter",
+                "I was walking alone in a corridor at the mall when a guy started following closely. I turned into a store until he went away.",
+                "Al Ain", "Bawadi Mall", "2025-03-22", "16:30", 1));
+
+        // Insert each post into the database
+        for (Post post : samplePosts) {
+            insertPostDuringCreation(db, post); // Use a new method to insert with existing db
+        }
+    }
+
+    private void insertPostDuringCreation(SQLiteDatabase db, Post post)
+    {
+        String title = escapeQuotes(post.getTitle());
+        String description = escapeQuotes(post.getDescription());
+        String city = escapeQuotes(post.getCity());
+        String area = escapeQuotes(post.getArea());
+        String date = escapeQuotes(post.getDate());
+        String time = escapeQuotes(post.getTime());
+
+        String sqlInsert = "INSERT INTO Post values(" +
+                "null, " +
+                "'" + title + "', " +
+                "'" + description + "', " +
+                "'" + city + "', " +
+                "'" + area + "', " +
+                "'" + date + "', " +
+                "'" + time + "', " +
+                post.getUserId() + ");";
+
+        db.execSQL(sqlInsert);
+    }
+
+
+    /*Why a separate method was created:
+         To avoid getting a writable database while already inside a getWritableDatabase() context (onCreate).
+         results in a recursive call which can cause a crash due to "database is locked" or "stack overflow".
+     */
+
+
+    private String escapeQuotes(String input) {
+        return input == null ? null : input.replace("'", "''");
+    }
 }

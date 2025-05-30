@@ -81,6 +81,11 @@ public class RegisterActivity extends AppCompatActivity {
                 else if(alainRB.isChecked())
                     city = "Al Ain";
 
+                DatabaseManager db = DatabaseManager.getInstance(RegisterActivity.this);
+                if (db.isEmailTaken(email)) {
+                    registerEmailValidation.setText("This email is already in use.");
+                    return; // Stop further execution
+                }
 
                 //By default a Member would be created, NOT Admin. (Admins' accounts are created through hardcoding in the system)
                 Member member=null;
@@ -99,31 +104,14 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Error creating a User", Toast.LENGTH_LONG).show();
                 }
 
-
-                if(member != null) {
-
-                    Intent i = new Intent(RegisterActivity.this, OTPActivity.class);
-                    i.putExtra("email", email);
-                    startActivity(i);
-
-
-                    DatabaseManager db = DatabaseManager.getInstance(RegisterActivity.this);
-                    boolean success = db.registerUser(member);
-
-                    if (success)
-                    {
-                        Toast.makeText(RegisterActivity.this, "Account created successful!", Toast.LENGTH_SHORT).show();
-
-                        Intent i = new Intent(RegisterActivity.this, Otp.class);
-                        startActivity(i);
-
-                        finish();
-
-                    }
-                    else
-                        Toast.makeText(RegisterActivity.this, "Oops! Something went wrong", Toast.LENGTH_LONG).show();
-
-                }
+                Intent i = new Intent(RegisterActivity.this, OTPActivity.class);
+                i.putExtra("firstName", firstName);
+                i.putExtra("lastName", lastName);
+                i.putExtra("age", age);
+                i.putExtra("email", email);
+                i.putExtra("password", password);
+                i.putExtra("city", city);
+                startActivity(i);
 
             }
         });
@@ -209,7 +197,6 @@ public class RegisterActivity extends AppCompatActivity {
                 confirmPasswordET.setEnabled(true);
                 isPasswordValid = true;
             }
-
         }
     }
 

@@ -12,13 +12,13 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
         android:text="back"
         android:backgroundTint="#413F8C"
         android:textColor="#FFFFFF"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="15dp"
+        android:paddingVertical="10dp"
         android:textSize="17sp"
         android:textStyle=""
         android:onClick="goToLogin"/>
@@ -33,7 +33,7 @@
         android:layout_below="@+id/backButton"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="130dp"
         android:layout_marginHorizontal="20dp"/>
 
 
@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/registerFullNameTV"
         android:hint="First name"
+        android:textColorHint="@color/white"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"/>
 
@@ -56,6 +57,7 @@
         android:layout_below="@id/registerFullNameTV"
         android:layout_toRightOf="@id/registerFisrtNameET"
         android:hint="Last name"
+        android:textColorHint="@color/white"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"/>
 
@@ -66,11 +68,12 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="Enter Age:"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold"
         android:layout_below="@+id/registerFisrtNameET"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="20dp"/>
 
 
     <!-- Age Input -->
@@ -79,8 +82,10 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ageTV"
+        android:textColorHint="@color/white"
         android:hint="Enter age"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:layout_marginHorizontal="20dp"/>
 
     <!-- Age Validation -->
     <TextView
@@ -88,7 +93,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/registerAgeET"
-        android:textColor="#3F51B5"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="#08113A"
         android:textSize="12sp"/>
 
 
@@ -99,11 +105,12 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="Enter City:"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold"
         android:layout_below="@+id/registerAgeValidation"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"/>
 
 
 
@@ -113,19 +120,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cityTV"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="20dp">
 
         <RadioButton
             android:id="@+id/abudhabiRB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Abu Dhabi"
+            android:textColor="@color/white"
             android:checked="true"/>
         <RadioButton
             android:id="@+id/dubaiRB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
             android:text="Dubai"/>
 
         <RadioButton
@@ -133,12 +143,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sharjah"
+            android:textColor="@color/white"
             android:layout_marginLeft="10dp" />
 
         <RadioButton
             android:id="@+id/alainRB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="Al Ain"
             android:layout_marginLeft="10dp"/>
 
@@ -157,7 +169,7 @@
         android:textSize="18dp"
         android:textStyle="bold"
         android:layout_below="@+id/cityRG"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="20dp"/>
 
 
@@ -170,6 +182,7 @@
         android:layout_below="@id/registerEmailTV"
         android:inputType="textEmailAddress"
         android:hint="example@email.com"
+        android:textColorHint="@color/white"
         android:enabled="false"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"/>
@@ -192,8 +205,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/registerEmailValidation"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Create a password:"
+        android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold"
         android:layout_marginHorizontal="20dp"/>
@@ -207,6 +221,7 @@
         android:layout_below="@id/registerPasswordTV"
         android:inputType="textPassword"
         android:hint="Enter your password"
+        android:textColorHint="@color/white"
         android:enabled="false"
         android:layout_marginHorizontal="20dp"/>
 
@@ -228,8 +243,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/registerPasswordValidation"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Confirm password:"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold"
         android:layout_marginHorizontal="20dp"/>
@@ -243,6 +260,7 @@
         android:layout_below="@id/confirmPasswordTV"
         android:inputType="textPassword"
         android:hint="Retype password"
+        android:textColorHint="@color/white"
         android:enabled="false"
         android:layout_marginHorizontal="20dp"/>
 
@@ -261,13 +279,15 @@
     <!-- Register Button -->
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/confirmPasswordValidation"
         android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
         android:text="Register"
         android:enabled="false"
         android:backgroundTint="#1D1D57"
+        android:textColor="@color/white"
         android:layout_marginHorizontal="20dp"/>
 
 

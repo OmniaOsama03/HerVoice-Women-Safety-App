@@ -19,7 +19,11 @@ public class OTPActivity extends AppCompatActivity {
     Button submitOtpButton, resendOtpButton;
     Button backButton;
 
-    String userEmail; //Passed from RegisterActivity
+    String userEmail;
+    String firstName, lastName, password, city;
+    int age;
+
+    public static final String BASE_URL = "http://10.40.33.180:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,11 @@ public class OTPActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
 
         userEmail = getIntent().getStringExtra("email");
+        firstName = getIntent().getStringExtra("firstName");
+        lastName = getIntent().getStringExtra("lastName");
+        password = getIntent().getStringExtra("password");
+        city = getIntent().getStringExtra("city");
+        age = getIntent().getIntExtra("age", 0);
 
         submitOtpButton.setOnClickListener(v -> {
             String otp = otpInput.getText().toString().trim();
@@ -79,7 +88,7 @@ public class OTPActivity extends AppCompatActivity {
         {
             try
             {
-                URL url = new URL("http://10.40.33.180:3000/send-otp");
+                URL url = new URL(BASE_URL + "/send-otp");
 
                 //Opening a connection
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -124,7 +133,7 @@ public class OTPActivity extends AppCompatActivity {
     private void verifyOtp(String email, String otp) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.40.33.180:3000/verify-otp");
+                URL url = new URL(BASE_URL + "/verify-otp");
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -142,9 +151,34 @@ public class OTPActivity extends AppCompatActivity {
 
                 if (conn.getResponseCode() == 200)
                 {
-                    showToast("OTP verified");
-                    Intent intent = new Intent(OTPActivity.this, HomePageActivity.class);
-                    startActivity(intent);
+                    runOnUiThread(() -> {
+                        DatabaseManager db = DatabaseManager.getInstance(OTPActivity.this);
+                        Member member = new Member(
+                                0,
+                                firstName,
+                                lastName,
+                                age,
+                                userEmail,
+                                password,
+                                false,
+                                city
+                        );
+
+                        boolean success = db.registerUser(member);
+
+                        if (success)
+                        {
+                            Toast.makeText(OTPActivity.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(OTPActivity.this, HomePageActivity.class);
+                            startActivity(intent);
+
+                            finish();
+                        } else
+                        {
+                            Toast.makeText(OTPActivity.this, "Oops! Something went wrong!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                 } else
                 {
