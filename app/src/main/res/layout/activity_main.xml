@@ -94,5 +94,5 @@
         android:textColor="#0066CC"
         android:textSize="14sp"
         android:text="Register here"
-        android:padding="0dp"/>
+        android:padding="0dp" />
 </RelativeLayout>

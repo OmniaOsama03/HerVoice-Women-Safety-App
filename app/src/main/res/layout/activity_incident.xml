@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".IncidentActivity"
+    android:layout_margin="20dp">
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post an Incident - share with us!"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"/>
+
+
+<!--    Grey BG-->
+    <TextView
+        android:layout_width="375dp"
+        android:layout_height="565dp"
+        android:background="#D6D5D5"
+        android:layout_below="@+id/heading"
+        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"/>
+
+
+<!--    Title Input-->
+    <EditText
+        android:id="@+id/titleET"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@id/heading"
+        android:hint="Enter title"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <!--    Description Input-->
+    <EditText
+        android:id="@+id/descriptionET"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:background="@color/white"
+        android:layout_below="@id/titleET"
+        android:hint="Enter description"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+
+    <!--    City-->
+    <!--    City label-->
+    <TextView
+        android:id="@+id/cityTV"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text="Choose City:"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/descriptionET"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"/>
+
+
+    <!--    City Input Radiobuttons-->
+    <RadioGroup
+        android:id="@+id/cityRG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cityTV"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp">
+
+        <RadioButton
+            android:id="@+id/abudhabiRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Abu Dhabi"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/dubaiRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Dubai"/>
+
+        <RadioButton
+            android:id="@+id/sharjahRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sharjah"
+            android:layout_marginLeft="10dp" />
+
+        <RadioButton
+            android:id="@+id/alainRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Al Ain"
+            android:layout_marginLeft="10dp"/>
+
+    </RadioGroup>
+
+
+    <!--    area-->
+    <!--    area label-->
+    <TextView
+        android:id="@+id/areaTV"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text="Enter area:"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/cityRG"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+
+    <!--    area Input-->
+    <EditText
+        android:id="@+id/areaET"
+        android:layout_width="350dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:layout_below="@id/areaTV"
+        android:hint="Corniche"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <!--    date-->
+    <!--    date label-->
+    <TextView
+        android:id="@+id/dateTV"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text="Enter date:"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/areaET"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+
+    <!--    date Input-->
+    <EditText
+        android:id="@+id/dayET"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:layout_below="@id/dateTV"
+        android:hint="DD/"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:inputType="number"
+        />
+    <EditText
+        android:id="@+id/monthET"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:layout_below="@id/dateTV"
+        android:hint="MM/"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/dayET"
+        android:inputType="number"/>
+    <EditText
+        android:id="@+id/yearET"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:layout_below="@id/dateTV"
+        android:hint="YY"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/monthET"
+        android:padding="5dp"
+        android:inputType="number"/>
+
+
+    <!--    time-->
+    <!--    time label-->
+    <TextView
+        android:id="@+id/timeTV"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text="Enter time:"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/dayET"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+
+    <!--    time Input-->
+    <EditText
+        android:id="@+id/timeHourET"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:layout_below="@id/timeTV"
+        android:hint="hh"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:inputType="number" />
+    <EditText
+        android:id="@+id/timeMinET"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:layout_below="@id/timeTV"
+        android:layout_toRightOf="@+id/timeHourET"
+        android:hint="mm"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:inputType="number"/>
+
+    <!--    Time Input Radiobuttons-->
+    <RadioGroup
+        android:id="@+id/timeRG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeTV"
+        android:layout_toRightOf="@+id/timeMinET"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp">
+
+        <RadioButton
+            android:id="@+id/amRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AM"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/pmRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="PM"/>
+
+    </RadioGroup>
+
+
+    <!-- Post Button -->
+    <Button
+        android:id="@+id/postButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timeHourET"
+        android:layout_marginTop="20dp"
+        android:text="Post"
+        android:layout_centerHorizontal="true"
+        android:enabled="false"/>
+
+
+</RelativeLayout>

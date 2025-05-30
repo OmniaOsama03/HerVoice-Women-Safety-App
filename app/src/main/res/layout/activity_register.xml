@@ -54,6 +54,93 @@
         android:layout_marginTop="5dp"/>
 
 
+<!--    Age label-->
+    <TextView
+        android:id="@+id/ageTV"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text="Enter Age:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/registerFisrtNameET"
+        android:layout_marginTop="20dp"/>
+
+
+    <!-- Age Input -->
+    <EditText
+        android:id="@+id/registerAgeET"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ageTV"
+        android:hint="Enter age"
+        android:inputType="number"/>
+
+    <!-- Age Validation -->
+    <TextView
+        android:id="@+id/registerAgeValidation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/registerAgeET"
+        android:textColor="#3F51B5"
+        android:textSize="12sp"/>
+
+
+
+<!--    City label-->
+    <TextView
+        android:id="@+id/cityTV"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text="Enter City:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/registerAgeValidation"
+        android:layout_marginTop="10dp"/>
+
+
+
+<!--    City Input Radiobuttons-->
+    <RadioGroup
+        android:id="@+id/cityRG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cityTV"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/abudhabiRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Abu Dhabi"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/dubaiRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Dubai"/>
+
+        <RadioButton
+            android:id="@+id/sharjahRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sharjah"
+            android:layout_marginLeft="10dp" />
+
+        <RadioButton
+            android:id="@+id/alainRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Al Ain"
+            android:layout_marginLeft="10dp"/>
+
+    </RadioGroup>
+
+
+
+
 <!--    Email Label-->
     <TextView
         android:id="@+id/registerEmailTV"
@@ -63,11 +150,11 @@
         android:textColor="@color/black"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_below="@+id/registerFisrtNameET"
-        android:layout_marginTop="30dp"/>
+        android:layout_below="@+id/cityRG"
+        android:layout_marginTop="20dp"/>
 
 
-    <!-- Email Input -->
+    <!-- Email Input ENABLED FALSE-->
     <EditText
         android:id="@+id/registerEmailET"
         android:layout_width="match_parent"
@@ -75,7 +162,7 @@
         android:layout_below="@id/registerEmailTV"
         android:inputType="textEmailAddress"
         android:hint="example@email.com"
-        android:layout_marginTop="5dp"/>
+        android:enabled="false"/>
 
 
     <!-- Email Validation -->
@@ -94,7 +181,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/registerEmailValidation"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:text="Create a password:"
         android:textSize="18dp"
         android:textStyle="bold" />
@@ -127,7 +214,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/registerPasswordValidation"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:text="Confirm password:"
         android:textSize="18dp"
         android:textStyle="bold" />
@@ -160,40 +247,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/confirmPasswordValidation"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="0dp"
         android:text="Register"
         android:enabled="false" />
 
 
-<!--    TV for picture-->
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="150dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:background="@color/black"/>-->
 
-
-<!--    Picture-->
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/logo"
-        android:layout_below="@id/registerButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
-
-
-<!--    Motto-->
-    <TextView
-        android:id="@+id/motto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
-        android:text="Your space. Your story. Your voice"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
-        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
