@@ -6,6 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="#33FFFFFF"
+    android:background="#E7E0F6"
     app:menu="@menu/bottom_nav_menu"
     />
