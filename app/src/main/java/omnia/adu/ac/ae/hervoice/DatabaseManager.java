@@ -11,7 +11,9 @@ import android.util.Log;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //This Class has the following database operations
 //There are 2 Tables - User & Post
@@ -294,6 +296,59 @@ public class DatabaseManager extends SQLiteOpenHelper
     //Database operation: Search
     //for Table: Post
     //for Activity: HomePageActivity
+    public ArrayList<Post> getFilteredPosts(String titleKeyword, String city, String area)
+    {
+        ArrayList<Post> posts = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //Base query
+        String query = "SELECT * FROM Post WHERE 1=1"; //Always evaluates to true, so lets us add conditions later. (or you'd need to track first one to add WHERE)
+        List<String> args = new ArrayList<>();
+
+        // Apply title filter (if not empty)
+        if (titleKeyword != null && !titleKeyword.isEmpty())
+        {
+            query += " AND title LIKE ?";
+            args.add("%" + escapeQuotes(titleKeyword) + "%");
+        }
+
+        // Apply city filter (if selected)
+        if (city != null && !city.isEmpty()) {
+            query+=" AND city = ?";
+            args.add(escapeQuotes(city));
+        }
+
+        // Apply area filter (if not empty)
+        if (area != null && !area.isEmpty()) {
+            query += " AND area LIKE ?";
+            args.add("%" + escapeQuotes(area) + "%");
+        }
+
+        Cursor cursor = db.rawQuery(query, args.toArray(new String[0]));
+
+        if (cursor.moveToFirst())
+        {
+            do {
+                Post post = new Post(
+                        cursor.getInt(0), // id
+                        cursor.getString(1), // title
+                        cursor.getString(2), // description
+                        cursor.getString(3), // city
+                        cursor.getString(4), // area
+                        cursor.getString(5), // date
+                        cursor.getString(6), // time
+                        cursor.getInt(7)     // user_id
+                );
+
+                posts.add(post);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return posts;
+    }
 
 
 
@@ -332,23 +387,118 @@ public class DatabaseManager extends SQLiteOpenHelper
         return posts;
     }
 
+    //returns a hashmap of all cities and the number of posts from them
+    public Map<String, Integer> getPostCountGroupedByCity()
+    {
+        Map<String, Integer> postCounts = new HashMap<>();
 
+        SQLiteDatabase db = this.getReadableDatabase();
 
-    //Database operation: Update
-    //for Table: Post
-    //for Activity: ? An activity for members to view their posts and thereby be able to update
+        String query = "SELECT city, COUNT(*) as count FROM Post GROUP BY city";
+        Cursor cursor = db.rawQuery(query, null);
 
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                String city = cursor.getString(0);
+                int count = cursor.getInt(1);
 
+                postCounts.put(city, count);
 
-    //Database operation: Delete
-    //for Table: Post
-    //for Activity: Homepage (Only admins can delete posts.) (Members can delete only their post)
+            } while (cursor.moveToNext());
+        }
 
+        cursor.close();
+        db.close();
+        return postCounts;
+    }
 
-    //Another Database operation for Delete posts for Members?
+    //Returns a hashmap of different timings and the count of posts that occured in them
+    public Map<String, Integer> getPostCountByTimeRange() {
+        Map<String, Integer> timeBuckets = new HashMap<>();
 
+        timeBuckets.put("Morning", 0);   // 06:00–11:59
+        timeBuckets.put("Afternoon", 0); // 12:00–17:59
+        timeBuckets.put("Evening", 0);   // 18:00–23:59
+        timeBuckets.put("Night", 0);     // 00:00–05:59
 
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        String query = "SELECT time FROM Post";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                String timeStr = cursor.getString(0);
+                int hour = Integer.parseInt(timeStr.split(":")[0]); //splitting the time based on :  and taking the first part (hour)
+
+                if (hour >= 6 && hour < 12)
+                    timeBuckets.put("Morning", timeBuckets.get("Morning") + 1);
+
+                else if (hour >= 12 && hour < 18)
+                    timeBuckets.put("Afternoon", timeBuckets.get("Afternoon") + 1);
+
+                else if (hour >= 18 && hour < 24)
+                    timeBuckets.put("Evening", timeBuckets.get("Evening") + 1);
+
+                else
+                    timeBuckets.put("Night", timeBuckets.get("Night") + 1);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return timeBuckets;
+    }
+
+    //Returns all the posts under a certain user id
+    public ArrayList<Post> getPostsByUserId(int userId)
+    {
+
+        ArrayList<Post> posts = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM Post WHERE user_id = " + userId, null);
+
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                Post post = new Post(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7)
+                );
+
+                posts.add(post);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return posts;
+    }
+
+    //Deletes a post given the id
+    public void deletePost(int postId) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "DELETE FROM Post WHERE id = " + postId;
+
+        db.execSQL(query);
+        db.close();
+    }
 
     //Helper to hash password
     private String hashPassword(String password) {
