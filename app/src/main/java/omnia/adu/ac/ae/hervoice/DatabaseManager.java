@@ -23,7 +23,7 @@ import java.util.Map;
 public class DatabaseManager extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "HerVoiceDB";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     private static DatabaseManager instance;
 
@@ -179,31 +179,40 @@ public class DatabaseManager extends SQLiteOpenHelper
     //Database operation: Update by id
     //for Table: User
     //for Activity: EditProfileActivity
-    public boolean updateById( int id, String first_name, String last_name, int age, String email, String password, String city ) {
+    public boolean updateById(int id, String first_name, String last_name, int age, String email, String password, String city) {
 
-        String hashedPass = hashPassword(password);
         SQLiteDatabase db = this.getWritableDatabase();
+            String sqlUpdate;
 
-        try {
-            String sqlUpdate = "UPDATE User" +
-                    " set first_name = '" + first_name + "', " +
-                    "last_name = '" + last_name + "',"+
-                    "age =" +age+ "," +
-                    "email = '" + email + "',"+
-                    "password_hash = '" + hashedPass + "',"+
-                    "city = '" + city +
-                    " where id = " + id;
+            if (password == null || password.isEmpty())
+            {
+                // Don’t update the password (user didn't update field)
+                sqlUpdate = "UPDATE User " +
+                        "SET first_name = '" + first_name + "', " +
+                        "last_name = '" + last_name + "', " +
+                        "age = " + age + ", " +
+                        "email = '" + email + "', " +
+                        "city = '" + city + "' " +
+                        "WHERE id = " + id;
+            } else {
+                // Update password as well
+                String hashedPass = hashPassword(password);
+                sqlUpdate = "UPDATE User " +
+                        "SET first_name = '" + first_name + "', " +
+                        "last_name = '" + last_name + "', " +
+                        "age = " + age + ", " +
+                        "email = '" + email + "', " +
+                        "password_hash = '" + hashedPass + "', " +
+                        "city = '" + city + "' " +
+                        "WHERE id = " + id;
+            }
 
             db.execSQL(sqlUpdate);
-            db.close( );
-            return true;
-        }
-        catch(Exception e) {
             db.close();
-            return false;
-        }
+            return true;
 
     }
+
 
 
     //Database operation: Select Member by id
@@ -469,24 +478,31 @@ public class DatabaseManager extends SQLiteOpenHelper
         String query = "SELECT time FROM Post";
         Cursor cursor = db.rawQuery(query, null);
 
-        if (cursor.moveToFirst())
-        {
-            do
-            {
-                String timeStr = cursor.getString(0);
-                int hour = Integer.parseInt(timeStr.split(":")[0]); //splitting the time based on :  and taking the first part (hour)
+        if (cursor.moveToFirst()) {
+            do {
+                String timeStr = cursor.getString(0); // example: "02:30PM"
+                    String hourPart = timeStr.substring(0, timeStr.indexOf(":"));
+                    String meridiem = timeStr.substring(timeStr.length() - 2);
 
-                if (hour >= 6 && hour < 12)
-                    timeBuckets.put("Morning", timeBuckets.get("Morning") + 1);
+                    int hour = Integer.parseInt(hourPart.trim());
 
-                else if (hour >= 12 && hour < 18)
-                    timeBuckets.put("Afternoon", timeBuckets.get("Afternoon") + 1);
+                    // Convert to 24-hour format
+                    if (meridiem.equalsIgnoreCase("AM")) {
+                        if (hour == 12) hour = 0;
+                    } else if (meridiem.equalsIgnoreCase("PM")) {
+                        if (hour != 12) hour += 12;
+                    }
 
-                else if (hour >= 18 && hour < 24)
-                    timeBuckets.put("Evening", timeBuckets.get("Evening") + 1);
+                    // Categorize into buckets
+                    if (hour >= 6 && hour < 12)
+                        timeBuckets.put("Morning", timeBuckets.get("Morning") + 1);
+                    else if (hour >= 12 && hour < 18)
+                        timeBuckets.put("Afternoon", timeBuckets.get("Afternoon") + 1);
+                    else if (hour >= 18 && hour < 24)
+                        timeBuckets.put("Evening", timeBuckets.get("Evening") + 1);
+                    else
+                        timeBuckets.put("Night", timeBuckets.get("Night") + 1);
 
-                else
-                    timeBuckets.put("Night", timeBuckets.get("Night") + 1);
 
             } while (cursor.moveToNext());
         }
@@ -563,75 +579,76 @@ public class DatabaseManager extends SQLiteOpenHelper
     public void insertSamplePosts(SQLiteDatabase db) {
         List<Post> samplePosts = new ArrayList<>();
 
-        samplePosts.add(new Post(100,   "Uncomfortable Stares at the Bus Stop",
-                "While waiting for the bus near the mall, I noticed a man continuously staring at me. He didn't say anything, but it made me uncomfortable enough to walk away and wait at a different stop.",
-                "Abu Dhabi", "Al Zahiyah", "2025-04-22", "18:45", 1));
+        samplePosts.add(new Post(100, "Uncomfortable Stares at the Bus Stop",
+                "While waiting for the bus near the mall in the early evening, I noticed a man continuously staring at me. He didn’t say anything or approach, but it made me uneasy enough to walk to another stop further down the road.",
+                "Abu Dhabi", "Al Zahiyah", "2025-04-22", "06:45PM", 1));
 
         samplePosts.add(new Post(101, "Feeling Followed in the Market",
-                "While shopping in the local market, I had the feeling someone was trailing me aisle to aisle. I changed directions a few times and he still seemed to follow. I left the store quickly.",
-                "Sharjah", "Al Nahda", "2025-05-01", "16:10", 1));
+                "While shopping in the local market, I noticed someone who seemed to follow me from aisle to aisle. I changed directions a few times and even paused to see if he would walk away, but he stayed nearby. I quickly finished and left the store.",
+                "Sharjah", "Al Nahda", "2025-05-01", "04:10PM", 1));
 
         samplePosts.add(new Post(102, "Loud Comments While Walking",
-                "As I was walking to the metro station, a group of guys made loud comments from across the street. Nothing threatening, but it made me want to avoid that street again.",
-                "Dubai", "Al Rigga", "2025-04-28", "14:25", 1));
+                "As I was heading to the metro station around midday, a group across the street made loud comments and laughed. It wasn’t threatening, but it made me uncomfortable enough to avoid that street in the future.",
+                "Dubai", "Al Rigga", "2025-04-28", "02:25PM", 1));
 
         samplePosts.add(new Post(103, "Strange Interaction in the Elevator",
-                "I got into an elevator alone, and a man joined right after. He stood unusually close even though the elevator was empty. He kept glancing at me, which made me very anxious until I reached my floor.",
-                "Abu Dhabi", "Khalidiya", "2025-05-03", "19:05", 1));
+                "I entered an empty elevator, and a man joined right after. Even though there was plenty of space, he stood unusually close and kept glancing at me during the ride. I felt very uneasy until I reached my floor and exited quickly.",
+                "Abu Dhabi", "Khalidiya", "2025-05-03", "07:05PM", 1));
 
         samplePosts.add(new Post(104, "Taxi Ride Made Me Uneasy",
-                "I took a ride with a private taxi driver who asked too many personal questions. He wasn’t rude, but it made me uncomfortable enough to end the ride early.",
-                "Dubai", "Jumeirah", "2025-05-06", "10:15", 1));
+                "I booked a private taxi in the morning, and the driver started asking too many personal questions like where I work and if I live nearby. He wasn’t rude, but the questions felt unnecessary and made me end the ride early.",
+                "Dubai", "Jumeirah", "2025-05-06", "10:15AM", 1));
 
-        samplePosts.add( new Post(105, "Repeated Encounters Near My Office",
-                "There’s a man I keep seeing around my office area, often standing near the building's entrance when I leave work. He hasn’t approached me, but it feels too frequent to be coincidence.",
-                "Sharjah", "Al Majaz", "2025-04-29", "17:30", 1));
+        samplePosts.add(new Post(105, "Repeated Encounters Near My Office",
+                "For several days in a row, I noticed the same man standing near the entrance of my office building right around the time I left work. He never said anything or came close, but the pattern felt strange and made me uneasy.",
+                "Sharjah", "Al Majaz", "2025-04-29", "05:30PM", 1));
 
         samplePosts.add(new Post(106, "Comment While Jogging",
-                "While jogging in the park, someone passing by made a comment about my outfit. It wasn’t aggressive, but it made me feel self-conscious and I cut my run short.",
-                "Al Ain", "Al Jimi", "2025-05-07", "07:00", 1));
+                "While jogging at the park early in the morning, someone passing by made an unnecessary comment about my appearance. It wasn’t aggressive, but it threw me off and I decided to end my jog earlier than planned.",
+                "Al Ain", "Al Jimi", "2025-05-07", "07:00AM", 1));
 
         samplePosts.add(new Post(107, "Feeling Watched on the Metro",
-                "During my metro ride, I noticed a man watching me constantly. He even moved seats to sit closer when the train wasn’t full. I got off two stops early to avoid further discomfort.",
-                "Dubai", "BurJuman", "2025-05-05", "09:40", 1));
+                "During my metro ride to work, I noticed a man frequently looking at me. Even when seats became available elsewhere, he moved closer. I felt uncomfortable enough to get off two stops early and wait for the next train.",
+                "Dubai", "BurJuman", "2025-05-05", "09:40AM", 1));
 
         samplePosts.add(new Post(108, "Uncomfortable Stares",
-                "While waiting at the bus stop in Khalifa City, I noticed a man staring for an uncomfortably long time. He didn't say anything, but it made me feel unsafe.",
-                "Abu Dhabi", "Khalifa City", "2024-11-10", "17:30", 1));
+                "While standing at the bus stop in Khalifa City in the late afternoon, I realized a man across the street had been staring for several minutes. He didn’t say anything, but the prolonged stare made me feel unsafe.",
+                "Abu Dhabi", "Khalifa City", "2024-11-10", "05:30PM", 1));
 
         samplePosts.add(new Post(109, "Taxi Driver Comments",
-                "The driver kept asking personal questions and commenting on my appearance. I felt trapped since I was alone in the car.",
-                "Abu Dhabi", "Al Wahda", "2024-12-01", "19:15", 1));
+                "During a taxi ride home, the driver started making comments about my looks and asked where I lived. I didn’t feel safe responding, so I stayed quiet and waited until we reached a public area to ask to be dropped off.",
+                "Abu Dhabi", "Al Wahda", "2024-12-01", "07:15PM", 1));
 
-        samplePosts.add(new Post(110,"Crowded Mall Incident",
-                "While shopping at the mall, someone brushed past me too closely multiple times. It felt intentional and made me really uncomfortable.",
-                "Dubai", "Mall of the Emirates", "2025-01-05", "14:20", 1));
+        samplePosts.add(new Post(110, "Crowded Mall Incident",
+                "While shopping at the mall on a weekend, someone kept brushing past me in the corridor even when it wasn’t crowded. It happened more than once, and it didn’t feel accidental, so I left the store.",
+                "Dubai", "Mall of the Emirates", "2025-01-05", "02:20PM", 1));
 
         samplePosts.add(new Post(111, "Unwanted Attention",
-                "As I walked to my car in the parking lot, a man started following me while calling out things. I rushed into my car and locked it.",
-                "Sharjah", "Al Majaz", "2025-02-12", "21:45", 1));
+                "As I walked to my car in the parking lot at night, I noticed a man following me and calling out to get my attention. I quickly got into my car, locked the doors, and waited until he walked away.",
+                "Sharjah", "Al Majaz", "2025-02-12", "09:45PM", 1));
 
         samplePosts.add(new Post(112, "Metro Encounter",
-                "A man stood far too close to me in an almost empty train car. I moved away and he followed until another passenger intervened.",
-                "Dubai", "BurJuman Station", "2025-02-25", "08:10", 1));
+                "In a nearly empty metro car during the morning rush, a man stood too close despite having space elsewhere. I moved twice and he followed, until another passenger stepped in and asked if I was okay.",
+                "Dubai", "BurJuman Station", "2025-02-25", "08:10AM", 1));
 
         samplePosts.add(new Post(113, "Unsettling Experience",
-                "I was walking near the corniche when a group of men started whispering and pointing. They didn’t approach, but it made me hurry home.",
-                "Abu Dhabi", "Corniche", "2025-03-05", "18:00", 1));
+                "While walking along the corniche just before sunset, a group of men began whispering and pointing in my direction. They stayed on the sidewalk, but their behavior made me hurry home without finishing my walk.",
+                "Abu Dhabi", "Corniche", "2025-03-05", "06:00PM", 1));
 
         samplePosts.add(new Post(114, "Weird Interaction",
-                "A stranger tried to get my number at a gas station. He got upset when I refused, and I had to wait for him to drive off before I left.",
-                "Dubai", "Jumeirah", "2025-03-15", "13:45", 1));
+                "At a gas station, a man approached and asked for my number. When I politely declined, he became noticeably irritated and stayed near his car watching me. I waited inside until he left.",
+                "Dubai", "Jumeirah", "2025-03-15", "01:45PM", 1));
 
         samplePosts.add(new Post(115, "Mall Corridor Encounter",
-                "I was walking alone in a corridor at the mall when a guy started following closely. I turned into a store until he went away.",
-                "Al Ain", "Bawadi Mall", "2025-03-22", "16:30", 1));
+                "I was walking through a quieter corridor in the mall when I noticed a man walking directly behind me for longer than felt normal. I ducked into a store, and he kept walking. It left me feeling uneasy.",
+                "Al Ain", "Bawadi Mall", "2025-03-22", "04:30PM", 1));
 
         // Insert each post into the database
         for (Post post : samplePosts) {
             insertPostDuringCreation(db, post); // Use a new method to insert with existing db
         }
     }
+
 
     private void insertPostDuringCreation(SQLiteDatabase db, Post post)
     {

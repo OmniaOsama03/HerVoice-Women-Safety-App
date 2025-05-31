@@ -133,11 +133,18 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s)
         {
-            int age = Integer.parseInt(registerAgeET.getText().toString());
+            String ageStr = registerAgeET.getText().toString();
+
+            if(ageStr.isEmpty())
+            {
+                return;
+            }
+
+            int age = Integer.parseInt(ageStr);
 
             if (age<18)
             {
-                registerAgeValidation.setText("Must be 18 or above to create an account with us. Seek parental advice and register using parents' account!")getColor(R.color.deep_red);
+                registerAgeValidation.setText("Must be 18 or above to create an account with us. Seek parental advice and register using parents' account!");
                 registerEmailET.setEnabled(false);
 
             } else {

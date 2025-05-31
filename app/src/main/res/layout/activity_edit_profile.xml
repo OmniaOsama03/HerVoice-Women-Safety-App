@@ -47,135 +47,221 @@
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"/>
 
-
-
-    <!--    First Name-->
-    <EditText
-        android:id="@+id/firstNameET"
-        android:layout_width="wrap_content"
+    <!-- First Name -->
+    <LinearLayout
+        android:id="@+id/fnlayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="First name"
-        android:textColor="@color/white"
-        android:textSize="18dp"
         android:layout_below="@+id/profileName"
-        android:layout_marginTop="35dp"/>
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="First Name"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
+        <EditText
+            android:id="@+id/firstNameET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="First name"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/separator2"
+        android:id="@+id/firstNameValidationTV"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/grey"
-        android:layout_below="@+id/profileName"
-        android:layout_marginTop="71dp"/>
-
-
-    <!--    Last Name-->
-    <EditText
-        android:id="@+id/lastNameET"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Last name"
-        android:textSize="18dp"
-        android:layout_below="@+id/separator2"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/white"/>
+        android:layout_below="@+id/fnlayout"
+        android:text=""
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
 
-
-
-    <TextView
-        android:id="@+id/separator3"
+    <!-- Last Name -->
+    <LinearLayout
+        android:id="@+id/lnlayout"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/grey"
-        android:layout_below="@+id/separator2"
-        android:layout_marginTop="67dp"/>
-
-
-
-    <!--    Email-->
-    <EditText
-        android:id="@+id/emailET"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:textSize="18dp"
-        android:layout_below="@+id/separator3"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/white"/>
+        android:layout_below="@+id/firstNameValidationTV"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Last Name"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
+        <EditText
+            android:id="@+id/lastNameET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Last name"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/separator4"
+        android:id="@+id/lastNameValidationTV"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/grey"
-        android:layout_below="@+id/separator3"
-        android:layout_marginTop="67dp"/>
-
-
-    <!--    Password-->
-    <EditText
-        android:id="@+id/passwordET"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:textSize="18dp"
-        android:layout_below="@+id/separator4"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/white"/>
-    <TextView
-        android:id="@+id/separator3.2"
+        android:layout_below="@+id/lnlayout"
+        android:text=""
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+    <!-- Email -->
+    <LinearLayout
+        android:id="@+id/emaillayout"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/grey"
-        android:layout_below="@+id/separator4"
-        android:layout_marginTop="67dp"/>
-
-
-    <!--    Age-->
-    <EditText
-        android:id="@+id/ageET"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Age"
-        android:textSize="18dp"
-        android:layout_below="@+id/separator4"
-        android:layout_marginTop="98dp"
-        android:textColor="@color/white"/>
+        android:layout_below="@+id/lastNameValidationTV"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
+        <EditText
+            android:id="@+id/emailET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Email"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/separator5"
+        android:id="@+id/emailValidationTV"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/grey"
-        android:layout_below="@+id/separator4"
-        android:layout_marginTop="134dp"/>
-
-
-    <!--    City-->
-    <EditText
-        android:id="@+id/cityET"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="City"
-        android:textSize="18dp"
-        android:layout_below="@+id/separator5"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/white"/>
+        android:layout_below="@+id/emaillayout"
+        android:text=""
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+    <!-- Password -->
+    <LinearLayout
+        android:id="@+id/passwordlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emailValidationTV"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/passwordET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Password"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/separator6"
+        android:id="@+id/passwordValidationTV"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/grey"
-        android:layout_below="@+id/separator5"
-        android:layout_marginTop="66dp"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordlayout"
+        android:text=""
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
 
+    <!-- Age -->
+    <LinearLayout
+        android:id="@+id/agelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordValidationTV"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Age"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/ageET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Age"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/ageValidationTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/agelayout"
+        android:text=""
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+    <!-- City -->
+    <LinearLayout
+        android:id="@+id/citylayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ageValidationTV"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="City"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/cityET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="City"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/cityValidationTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/citylayout"
+        android:text=""
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
 
     <!-- Save Button -->
     <Button
@@ -187,13 +273,11 @@
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
-        android:layout_below="@+id/separator6"
-        android:layout_marginTop="45dp"
+        android:layout_below="@+id/cityValidationTV"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
-        android:onClick="saveData"
-        />
-
-
+        android:enabled="false"
+        android:onClick="saveData" />
 
 
 </RelativeLayout>

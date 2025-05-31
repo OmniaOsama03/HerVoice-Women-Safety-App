@@ -133,7 +133,7 @@ public class AllPostsActivity extends AppCompatActivity {
             infoRow.addView(readMoreBtn);
             infoRow.addView(deleteBtn);
 
-            // Assemble card
+            //add all the views (and layouts) created to the card layout
             card.addView(titleView);
             card.addView(descView);
             card.addView(infoRow);

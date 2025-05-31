@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_below="@+id/profilePicture"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"/>

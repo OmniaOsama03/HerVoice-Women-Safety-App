@@ -22,9 +22,6 @@
             android:name=".AllPostsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
             android:name=".OTPActivity"
             android:exported="false" />
         <activity
@@ -41,6 +38,9 @@
             android:theme="@style/Theme.HerVoice" />
         <activity
             android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

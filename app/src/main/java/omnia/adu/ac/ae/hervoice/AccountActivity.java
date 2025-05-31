@@ -7,9 +7,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -50,11 +52,12 @@ public class AccountActivity extends AppCompatActivity {
 
         currentMember = db.selectById(currentId);
 
+
         profileName.setText(currentMember.getFirstName() + " " + currentMember.getLastName());
         firstNameTV.setText(currentMember.getFirstName());
         lastNameTV.setText(currentMember.getLastName());
         emailTV.setText(currentMember.getEmail());
-        ageTV.setText(currentMember.getAge());
+        ageTV.setText(currentMember.getAge() + "");
         cityTV.setText(currentMember.getCity());
     }
 
@@ -65,7 +68,7 @@ public class AccountActivity extends AppCompatActivity {
         i.putExtra("firstName", currentMember.getFirstName());
         i.putExtra("lastName", currentMember.getLastName());
         i.putExtra("email", currentMember.getEmail());
-        i.putExtra("age", currentMember.getAge());
+        i.putExtra("age", currentMember.getAge() + "");
         i.putExtra("city", currentMember.getCity());
         startActivity(i);
     }

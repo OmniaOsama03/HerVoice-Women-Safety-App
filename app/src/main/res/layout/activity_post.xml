@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="@drawable/main">
+    android:background="#2F2B88">
 
 
     <fragment
@@ -32,7 +32,7 @@
         android:layout_below="@+id/heading"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
-        android:background="@color/dark_purple"/>
+        android:background="#5055AB"/>
 
 
     <!--    Title Input-->
@@ -94,7 +94,7 @@
             android:id="@+id/dubaiRB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:text="Dubai"/>
 
         <RadioButton
@@ -102,14 +102,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sharjah"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="5dp" />
 
         <RadioButton
             android:id="@+id/alainRB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Al Ain"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="5dp"/>
 
     </RadioGroup>
 

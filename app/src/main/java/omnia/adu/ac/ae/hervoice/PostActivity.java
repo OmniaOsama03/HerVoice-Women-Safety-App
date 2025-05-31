@@ -59,11 +59,11 @@ public class PostActivity extends AppCompatActivity {
 
 
         //Text watchers
-        dayET.addTextChangedListener(new PostActivity.DateWatcher());                           //
-        monthET.addTextChangedListener(new PostActivity.DateWatcher());
-        yearET.addTextChangedListener(new PostActivity.DateWatcher());
-        timeHourET.addTextChangedListener(new PostActivity.TimeWatcher());
-        timeMinET.addTextChangedListener(new PostActivity.TimeWatcher());
+        dayET.addTextChangedListener(new DateWatcher());                           //
+        monthET.addTextChangedListener(new DateWatcher());
+        yearET.addTextChangedListener(new DateWatcher());
+        timeHourET.addTextChangedListener(new TimeWatcher());
+        timeMinET.addTextChangedListener(new TimeWatcher());
 
 
 
@@ -136,55 +136,84 @@ public class PostActivity extends AppCompatActivity {
 
     // Date watcher
     private class DateWatcher implements TextWatcher {
-        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
         @Override
-        public void afterTextChanged(Editable s)
-        {
-            int day = Integer.parseInt(dayET.getText().toString());
-            int month = Integer.parseInt(monthET.getText().toString());
-            int year = Integer.parseInt(yearET.getText().toString());
-            //
-            if ( (day<0 || day>31) || (month<1 || month>12) || (year<00 || year>25))                //year must be b/w 2000 and 2025
-            {
-                Toast.makeText(PostActivity.this, "Invalid date", Toast.LENGTH_LONG).show();
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            String dayStr = dayET.getText().toString();
+            String monthStr = monthET.getText().toString();
+            String yearStr = yearET.getText().toString();
+
+            if (dayStr.isEmpty() || monthStr.isEmpty() || yearStr.isEmpty()) { //Checking if any part of the date is empty
                 isDateValid = false;
+                postButton.setEnabled(false);
+                return;
+            }
 
-            } else {
-                isDateValid = true;
+            try {
+                int day = Integer.parseInt(dayStr);
+                int month = Integer.parseInt(monthStr);
+                int year = Integer.parseInt(yearStr);
+
+                if ((day < 1 || day > 31) || (month < 1 || month > 12) || (year < 0 || year > 99)) {
+                    Toast.makeText(PostActivity.this, "Invalid date", Toast.LENGTH_SHORT).show();
+                    isDateValid = false;
+                } else {
+                    isDateValid = true;
+                }
+            } catch (NumberFormatException e) {
+                isDateValid = false;
             }
 
             postButton.setEnabled(isDateValid && isTimeValid);
-
         }
     }
 
-
-    // Time watcher
-    private class TimeWatcher implements TextWatcher {
-        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-        @Override
-        public void afterTextChanged(Editable s)
-        {
-            int hour = Integer.parseInt(timeHourET.getText().toString());
-            int min = Integer.parseInt(timeMinET.getText().toString());
-
-            if ( (hour<1 || hour>12) || (min<0 || min>59))                                          //
-            {
-                Toast.makeText(PostActivity.this, "Invalid time", Toast.LENGTH_LONG).show();
-                isTimeValid = false;
-
-            } else {
-                isTimeValid = true;
+        // Time watcher
+        private class TimeWatcher implements TextWatcher {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-            postButton.setEnabled(isDateValid && isTimeValid);
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+                String hourStr = timeHourET.getText().toString();
+                String minStr = timeMinET.getText().toString();
+
+                if (hourStr.isEmpty() || minStr.isEmpty()) {
+                    isTimeValid = false;
+                    postButton.setEnabled(false);
+                    return;
+                }
+
+                try {
+                    int hour = Integer.parseInt(hourStr);
+                    int min = Integer.parseInt(minStr);
+
+                    if ((hour < 1 || hour > 12) || (min < 0 || min > 59)) {
+                        Toast.makeText(PostActivity.this, "Invalid time", Toast.LENGTH_SHORT).show();
+                        isTimeValid = false;
+                    } else {
+                        isTimeValid = true;
+                    }
+                } catch (NumberFormatException e) {
+                    isTimeValid = false;
+                }
+
+                postButton.setEnabled(isDateValid && isTimeValid);
+
+            }
         }
+
+
     }
-
-
-}
