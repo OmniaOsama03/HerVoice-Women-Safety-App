@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/registerFullNameTV"
         android:hint="First name"
-        android:textColorHint="@color/white"
+
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"/>
 
@@ -57,7 +57,7 @@
         android:layout_below="@id/registerFullNameTV"
         android:layout_toRightOf="@id/registerFisrtNameET"
         android:hint="Last name"
-        android:textColorHint="@color/white"
+
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"/>
 
@@ -82,7 +82,7 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ageTV"
-        android:textColorHint="@color/white"
+
         android:hint="Enter age"
         android:inputType="number"
         android:layout_marginHorizontal="20dp"/>
@@ -182,7 +182,7 @@
         android:layout_below="@id/registerEmailTV"
         android:inputType="textEmailAddress"
         android:hint="example@email.com"
-        android:textColorHint="@color/white"
+
         android:enabled="false"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"/>
@@ -221,7 +221,7 @@
         android:layout_below="@id/registerPasswordTV"
         android:inputType="textPassword"
         android:hint="Enter your password"
-        android:textColorHint="@color/white"
+
         android:enabled="false"
         android:layout_marginHorizontal="20dp"/>
 
@@ -260,7 +260,7 @@
         android:layout_below="@id/confirmPasswordTV"
         android:inputType="textPassword"
         android:hint="Retype password"
-        android:textColorHint="@color/white"
+
         android:enabled="false"
         android:layout_marginHorizontal="20dp"/>
 

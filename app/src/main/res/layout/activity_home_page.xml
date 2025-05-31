@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/homepage">
 
+    <!-- Bottom Nav Fragment -->
     <fragment
         android:id="@+id/bottomNavFragment"
         android:name="omnia.adu.ac.ae.hervoice.BottomNavFragment"
@@ -10,50 +12,165 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
 
-        <TextView
-            android:id="@+id/welcomeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Welcome, ..."
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome, ..."
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:textColor="#EADDEE"
+        android:layout_centerHorizontal="true"/>
 
-        <TextView
-            android:id="@+id/postCountText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/welcomeText"
-            android:layout_marginTop="12dp"
-            android:text="You have ... posts"
-            android:textSize="18sp"
-            android:layout_marginHorizontal="50dp"/>
+    <TextView
+        android:id="@+id/postCountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You have ... posts"
+        android:textSize="18sp"
+        android:layout_below="@id/welcomeText"
+        android:layout_marginTop="8dp"
+        android:textColor="#EADDEE"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/viewPostsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View My Posts"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="100dp"
         android:layout_below="@id/postCountText"
+        android:layout_centerHorizontal="true"
+        android:text="My Posts"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#090D26"
         android:onClick="viewAllPosts"/>
 
     <ScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/mainScroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavFragment"
         android:layout_below="@id/viewPostsBtn"
-        android:layout_above="@id/bottomNavFragment">
+        android:layout_marginTop="40dp">
 
         <LinearLayout
-            android:id="@+id/postsContainer"
+            android:id="@+id/mainContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp" />
-    </ScrollView>
+            android:padding="16dp">
 
+
+            <!-- Filter Section -->
+            <LinearLayout
+                android:id="@+id/filterContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Search Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/searchIcon"
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/text"
+                        android:layout_gravity="center_vertical" />
+
+                    <EditText
+                        android:id="@+id/titleSearchInput"
+                        android:layout_width="120dp"
+                        android:textColorHint="#B3B3B3"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:hint="Search by title" />
+
+                    <TextView
+                        android:id="@+id/areaIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/location"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <EditText
+                        android:id="@+id/areaInput"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:hint="Filter by area"
+                        android:textColorHint="#B3B3B3"
+                        android:layout_marginBottom="8dp"/>
+
+                </LinearLayout>
+
+
+                <RadioGroup
+                    android:id="@+id/cityRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginHorizontal="20dp">
+
+                    <RadioButton android:id="@+id/radioAbuDhabi" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#E1E1FD" android:text="Abu Dhabi"/>
+                    <RadioButton android:id="@+id/radioDubai" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#E1E1FD" android:text="Dubai"/>
+                    <RadioButton android:id="@+id/radioSharjah" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#E1E1FD" android:text="Sharjah"/>
+                    <RadioButton android:id="@+id/radioAlAin" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#E1E1FD" android:text="Al Ain"/>
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/applyFilterBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Apply Filters"
+                        android:onClick="applyFilter"
+                        android:layout_marginLeft="80dp"
+                        android:backgroundTint="#090D26"/>
+
+                    <Button
+                        android:id="@+id/clearFilterBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Clear"
+                        android:layout_marginLeft="5dp"
+                        android:onClick="clearFilter"
+                        android:backgroundTint="#090D26"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/noResultsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <!-- Posts Go Here -->
+            <LinearLayout
+                android:id="@+id/postsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="16dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
