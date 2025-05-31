@@ -1,10 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AllPostsActivity">
+    android:background="@drawable/mypostsbg">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Bottom Nav Fragment -->
+    <fragment
+        android:id="@+id/bottomNavFragment"
+        android:name="omnia.adu.ac.ae.hervoice.BottomNavFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Posts"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:layout_marginTop="90dp"
+        android:textColor="#EADDEE"
+        android:layout_centerHorizontal="true"/>
+
+
+    <ScrollView
+        android:id="@+id/mainScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavFragment"
+        android:layout_below="@id/welcomeText"
+        android:layout_marginTop="80dp">
+
+            <!-- Posts Go Here -->
+            <LinearLayout
+                android:id="@+id/postsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:layout_marginHorizontal="20dp"/>
+
+    </ScrollView>
+
+</RelativeLayout>

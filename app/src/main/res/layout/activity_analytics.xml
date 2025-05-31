@@ -1,12 +1,8 @@
-<RelativeLayout android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Analytics"
-    android:layout_centerInParent="true"/>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/analyticsbg">
 
     <fragment
         android:id="@+id/bottomNavFragment"
@@ -15,6 +11,138 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
 
+    <TextView
+        android:id="@+id/analyticsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What Your Stories Show Us"
+        android:textSize="27sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp" />
 
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_marginTop="80dp"
+        android:layout_below="@id/analyticsTitle"
+        android:layout_above="@id/bottomNavFragment">
+
+    <LinearLayout
+        android:id="@+id/analyticsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/cityBarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Where Incidents Happen Most"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/cityBarChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/cityInsightText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Insight here..."
+            android:textStyle="italic"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:layout_marginBottom="32dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/timeBarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="When Incidents Occur Most"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/timeBarChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="32dp"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/timeInsightText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Insight here..."
+            android:textSize="15dp"
+            android:textStyle="italic"
+            android:textColor="@color/white"
+            android:layout_marginBottom="32dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Safety Reminders! Stay Aware, Stay Safe"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <!-- Safety info Card -->
+        <LinearLayout
+            android:id="@+id/safetyCard"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:orientation="horizontal"
+            android:background="@drawable/safetytipcard"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/safetyTipText"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:text="Your safety tip will appear here."/>
+
+            <Button
+                android:id="@+id/nextTipButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next Tip"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="#232142"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
