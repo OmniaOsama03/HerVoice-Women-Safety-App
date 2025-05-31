@@ -91,13 +91,13 @@ public class RegisterActivity extends AppCompatActivity {
                 Member member=null;
                 try {                                                                               //TRY-CATCH surrounding the member creation. Because if user leaves blank for age, then cannot parseInt blank to integer hence error and app crashes
                     member = new Member(
-                            0,                 // Database will auto-generate the ID
+                            0,                                                                  // Database will auto-generate the ID
                             firstName,
                             lastName,
                             age,
                             email,
                             password,
-                            false,     // permission = false (regular member i.e not Admin)
+                            false,                                                       // permission = false (regular member i.e not Admin)
                             city);
                 }
                 catch(Exception e) {
@@ -135,9 +135,9 @@ public class RegisterActivity extends AppCompatActivity {
         {
             int age = Integer.parseInt(registerAgeET.getText().toString());
 
-            if (age<=18)
+            if (age<18)
             {
-                registerAgeValidation.setText("Must be above 18 to create an account with us. Seek parental advice and register using parents' account!");
+                registerAgeValidation.setText("Must be 18 or above to create an account with us. Seek parental advice and register using parents' account!")getColor(R.color.deep_red);
                 registerEmailET.setEnabled(false);
 
             } else {

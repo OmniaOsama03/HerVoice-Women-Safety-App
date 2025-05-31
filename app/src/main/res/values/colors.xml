@@ -4,4 +4,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="deep_red">#540c1a</color>
 
+    <color name="dark_purple">#4B4C8C</color>
+    <color name="light_purple">#6C74B9</color>
+    <color name="blue">#3B51CC</color>
+    <color name="grey">#C7C6C6</color>
+    <color name="v_light_purp">#7F45E9</color>
+
 </resources>

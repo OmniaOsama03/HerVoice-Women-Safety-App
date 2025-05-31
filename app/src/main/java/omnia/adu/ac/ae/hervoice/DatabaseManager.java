@@ -15,7 +15,7 @@ import java.util.List;
 
 //This Class has the following database operations
 //There are 2 Tables - User & Post
-//User table: insert, update by id
+//User table: insert, selectById, updateById
 //Post Table: insert, select all, update, delete(only available for admins?), search
 
 public class DatabaseManager extends SQLiteOpenHelper
@@ -149,9 +149,6 @@ public class DatabaseManager extends SQLiteOpenHelper
     }
 
 
-    //Database operation: Select by id
-    //for Table: User
-    //for Activity: MainActivity
     public boolean loginUser(String email, String password) {
         //Get the password hash
         String hashedPassword = hashPassword(password);
@@ -179,22 +176,61 @@ public class DatabaseManager extends SQLiteOpenHelper
 
     //Database operation: Update by id
     //for Table: User
-    //for Activity: ProfileActivity
-    public void updateById( int id, String first_name, String last_name, int age, String email, String password_hash, String city ) {
+    //for Activity: EditProfileActivity
+    public boolean updateById( int id, String first_name, String last_name, int age, String email, String password, String city ) {
+
+        String hashedPass = hashPassword(password);
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String sqlUpdate = "UPDATE User" +
-                " set first_name = '" + first_name + "', " +
-                "last_name = '" + last_name + "',"+
-                "age =" +age+ "," +
-                "email = '" + email + "',"+
-                "password_hash = '" + password_hash + "',"+
-                "city = '" + city +
-                " where id = " + id;
+        try {
+            String sqlUpdate = "UPDATE User" +
+                    " set first_name = '" + first_name + "', " +
+                    "last_name = '" + last_name + "',"+
+                    "age =" +age+ "," +
+                    "email = '" + email + "',"+
+                    "password_hash = '" + hashedPass + "',"+
+                    "city = '" + city +
+                    " where id = " + id;
 
-        db.execSQL(sqlUpdate);
-        db.close( );
+            db.execSQL(sqlUpdate);
+            db.close( );
+            return true;
+        }
+        catch(Exception e) {
+            db.close();
+            return false;
+        }
+
     }
+
+
+    //Database operation: Select Member by id
+    //for Table: User
+    //for Activity: AccountActivity
+    public Member selectById(int id) {
+
+        String sqlQuery = "SELECT * FROM User WHERE id = " +id;
+
+        SQLiteDatabase db = this.getWritableDatabase( );
+        Cursor cursor = db.rawQuery( sqlQuery, null );
+
+        Member member = null;
+        if( cursor.moveToFirst( )  )
+            member = new Member(
+                    Integer.parseInt(cursor.getString(0)),
+                    cursor.getString( 1 ),
+                    cursor.getString( 2 ),
+                    Integer.parseInt(cursor.getString(3)),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getInt(6)== 1? true : false,
+                    cursor.getString(7)
+            );
+        return member;
+
+    }
+
+
 
     // Get user's full name by ID
     public String getUserFullNameById(int id)
@@ -253,7 +289,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 
     //Database operation: Insert
     //for Table: Post
-    //for Activity: IncidentActivity
+    //for Activity: PostActivity
     public boolean createPost(Post post) {
 
         //Open the database for writing
@@ -334,18 +370,19 @@ public class DatabaseManager extends SQLiteOpenHelper
 
 
 
+    //?
     //Database operation: Update
     //for Table: Post
-    //for Activity: ? An activity for members to view their posts and thereby be able to update
+    //for Activity: AllPostsActivity An activity for members to view their posts and thereby be able to update
 
 
 
     //Database operation: Delete
     //for Table: Post
-    //for Activity: Homepage (Only admins can delete posts.) (Members can delete only their post)
+    //for Activity: AllPostsActivity
 
 
-    //Another Database operation for Delete posts for Members?
+
 
 
 
