@@ -177,6 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Password"
+            android:inputType="textPassword"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
     </LinearLayout>
@@ -237,20 +238,52 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:text="City"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/cityET"
-            android:layout_width="0dp"
+        <!--    City Input Radiobuttons-->
+        <RadioGroup
+            android:id="@+id/cityRG"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="City"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:layout_below="@+id/cityTV"
+            android:orientation="horizontal"
+
+            android:layout_marginLeft="10dp">
+
+            <RadioButton
+                android:id="@+id/abudhabiRB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Abu Dhabi"
+                android:textColor="@color/white"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/dubaiRB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Dubai"/>
+
+            <RadioButton
+                android:id="@+id/sharjahRB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sharjah"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/alainRB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Al Ain"
+                android:textColor="@color/white"/>
+
+        </RadioGroup>
     </LinearLayout>
 
     <TextView

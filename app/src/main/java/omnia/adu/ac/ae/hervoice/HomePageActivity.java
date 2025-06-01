@@ -49,14 +49,14 @@ public class HomePageActivity extends AppCompatActivity {
         applyFilterBtn = findViewById(R.id.applyFilterBtn);
         clearFilterBtn = findViewById(R.id.clearFilterBtn);
         postsContainer = findViewById(R.id.postsContainer);
+        viewPostsBtn = findViewById(R.id.viewPostsBtn);
 
         int userId = SessionManager.getInstance().getCurrentUserId();
         DatabaseManager db = DatabaseManager.getInstance(this);
-        viewPostsBtn = findViewById(R.id.viewPostsBtn);
+
 
         String fullName = db.getUserFullNameById(userId);
         int postCount = db.getPostCountByUserId(userId);
-
 
         welcomeText.setText("Hello, " + fullName);
         postCountText.setText("You have " + postCount + " posts");
@@ -111,7 +111,8 @@ public class HomePageActivity extends AppCompatActivity {
             noResultsText.setText("    ");
         }
 
-        for (Post post : posts) {
+        for (Post post : posts)
+        {
             LinearLayout card = new LinearLayout(this);
 
             card.setOrientation(LinearLayout.VERTICAL);
@@ -120,7 +121,7 @@ public class HomePageActivity extends AppCompatActivity {
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    600 // ViewGroup.LayoutParams.WRAP_CONTENT
+                    600
             );
 
             layoutParams.setMargins(0, 0, 0, 32);

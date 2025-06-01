@@ -20,6 +20,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.Calendar;
+
 import omnia.adu.ac.ae.hervoice.databinding.ActivityPostBinding;
 
 public class PostActivity extends AppCompatActivity {
@@ -161,11 +163,39 @@ public class PostActivity extends AppCompatActivity {
                 int month = Integer.parseInt(monthStr);
                 int year = Integer.parseInt(yearStr);
 
-                if ((day < 1 || day > 31) || (month < 1 || month > 12) || (year < 0 || year > 99)) {
-                    Toast.makeText(PostActivity.this, "Invalid date", Toast.LENGTH_SHORT).show();
+                if ((day < 1 || day > 31) || (month < 1 || month > 12) || (year < 2000 || year > 2100)) {
+                    Toast.makeText(PostActivity.this, "Invalid date range", Toast.LENGTH_SHORT).show();
                     isDateValid = false;
                 } else {
-                    isDateValid = true;
+                    //Checking if the valid date range is a valid combination
+                    Calendar enteredDate = Calendar.getInstance(); //Gets a calender instance with today's date
+
+                    enteredDate.setLenient(false); //strict date validation (example, no february 31st is allowed)
+                    enteredDate.set(year, month - 1, day); //bc month is 0-based
+
+                    try
+                    {
+                        enteredDate.getTime(); //we don't need it, but we want to trigger validation
+
+                    } catch (Exception e)
+                    {
+                        Toast.makeText(PostActivity.this, "Invalid day/month combination", Toast.LENGTH_SHORT).show();
+
+                        isDateValid = false;
+                        postButton.setEnabled(false);
+                        return;
+                    }
+
+                    //Comparing the date to today
+                    Calendar today = Calendar.getInstance();
+
+                    if (enteredDate.after(today))
+                    {
+                        Toast.makeText(PostActivity.this, "Date cannot be in the future", Toast.LENGTH_SHORT).show();
+                        isDateValid = false;
+                    } else {
+                        isDateValid = true;
+                    }
                 }
             } catch (NumberFormatException e) {
                 isDateValid = false;

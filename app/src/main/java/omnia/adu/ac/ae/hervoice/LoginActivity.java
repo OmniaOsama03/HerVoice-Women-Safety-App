@@ -62,11 +62,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 boolean success = db.loginUser(email, password);
 
-                if (success) {
+                if (success)
+                {
                     Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
                     finish();
-                } else {
+                } else
+                {
                     passwordValidation.setText("Incorrect email or password.");
                 }
             }

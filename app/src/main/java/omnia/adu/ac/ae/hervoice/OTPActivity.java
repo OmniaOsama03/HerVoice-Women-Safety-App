@@ -26,7 +26,8 @@ public class OTPActivity extends AppCompatActivity {
     public static final String BASE_URL = "http://10.40.33.180:3000";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otpactivity);
 
@@ -42,11 +43,16 @@ public class OTPActivity extends AppCompatActivity {
         city = getIntent().getStringExtra("city");
         age = getIntent().getIntExtra("age", 0);
 
-        submitOtpButton.setOnClickListener(v -> {
+        submitOtpButton.setOnClickListener(v ->
+        {
             String otp = otpInput.getText().toString().trim();
-            if (otp.length() == 6) {
+
+            if (otp.length() == 6)
+            {
                 verifyOtp(userEmail, otp);
-            } else {
+
+            } else
+            {
                 Toast.makeText(this, "Enter a valid 6-digit OTP", Toast.LENGTH_SHORT).show();
             }
         });
@@ -131,7 +137,8 @@ public class OTPActivity extends AppCompatActivity {
     }
 
     private void verifyOtp(String email, String otp) {
-        new Thread(() -> {
+        new Thread(() ->
+        {
             try {
                 URL url = new URL(BASE_URL + "/verify-otp");
 
@@ -151,8 +158,8 @@ public class OTPActivity extends AppCompatActivity {
 
                 if (conn.getResponseCode() == 200)
                 {
-                    runOnUiThread(() -> {
                         DatabaseManager db = DatabaseManager.getInstance(OTPActivity.this);
+
                         Member member = new Member(
                                 0,
                                 firstName,
@@ -168,7 +175,7 @@ public class OTPActivity extends AppCompatActivity {
 
                         if (success)
                         {
-                            Toast.makeText(OTPActivity.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+                            showToast("Account created successfully!");
 
                             Intent intent = new Intent(OTPActivity.this, HomePageActivity.class);
                             startActivity(intent);
@@ -176,9 +183,8 @@ public class OTPActivity extends AppCompatActivity {
                             finish();
                         } else
                         {
-                            Toast.makeText(OTPActivity.this, "Oops! Something went wrong!", Toast.LENGTH_SHORT).show();
+                            showToast("Oops! Something went wrong!");
                         }
-                    });
 
                 } else
                 {

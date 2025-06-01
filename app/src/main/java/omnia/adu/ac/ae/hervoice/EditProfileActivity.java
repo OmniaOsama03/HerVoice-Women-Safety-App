@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +20,9 @@ import androidx.core.view.WindowInsetsCompat;
 public class EditProfileActivity extends AppCompatActivity {
 
     Button backButton, saveBTN;
-    EditText firstNameET, lastNameET, emailET, passwordET, ageET, cityET;
+    EditText firstNameET, lastNameET, emailET, passwordET, ageET;
     int currentId;
+    RadioButton abudhabiRB, dubaiRB, sharjahRB, alainRB;
 
     TextView firstNameValidationTV, lastNameValidationTV, emailValidationTV,
             passwordValidationTV, ageValidationTV, cityValidationTV;
@@ -40,7 +42,6 @@ public class EditProfileActivity extends AppCompatActivity {
         emailET = findViewById(R.id.emailET);
         passwordET = findViewById(R.id.passwordET);
         ageET = findViewById(R.id.ageET);
-        cityET = findViewById(R.id.cityET);
 
         firstNameValidationTV = findViewById(R.id.firstNameValidationTV);
         lastNameValidationTV = findViewById(R.id.lastNameValidationTV);
@@ -49,12 +50,42 @@ public class EditProfileActivity extends AppCompatActivity {
         ageValidationTV = findViewById(R.id.ageValidationTV);
         cityValidationTV = findViewById(R.id.cityValidationTV);
 
+        abudhabiRB = findViewById(R.id.abudhabiRB);
+        dubaiRB = findViewById(R.id.dubaiRB);
+        sharjahRB = findViewById(R.id.sharjahRB);
+        alainRB = findViewById(R.id.alainRB);
+
         firstNameET.setText(getIntent().getStringExtra("firstName"));
         lastNameET.setText(getIntent().getStringExtra("lastName"));
         emailET.setText(getIntent().getStringExtra("email"));
         passwordET.setHint("********");
         ageET.setText(String.valueOf(getIntent().getStringExtra("age")));
-        cityET.setText(getIntent().getStringExtra("city"));
+
+
+        // Preselect based on existing city
+        String currentCity = getIntent().getStringExtra("city");
+        if (currentCity != null)
+        {
+            switch (currentCity.toLowerCase())
+            {
+                case "abu dhabi":
+                    abudhabiRB.setChecked(true);
+                    break;
+
+                case "dubai":
+                    dubaiRB.setChecked(true);
+                    break;
+
+                case "sharjah":
+                    sharjahRB.setChecked(true);
+                    break;
+
+                case "al ain":
+                    alainRB.setChecked(true);
+                    break;
+            }
+        }
+
 
         //Adding text watchers to make sure none of the fields have ' in them
         TextWatcher watcher = new ValidationWatcher();
@@ -63,7 +94,35 @@ public class EditProfileActivity extends AppCompatActivity {
         emailET.addTextChangedListener(watcher);
         passwordET.addTextChangedListener(watcher);
         ageET.addTextChangedListener(watcher);
-        cityET.addTextChangedListener(watcher);
+
+        //Allowing the form to be validated for city options too
+        abudhabiRB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateForm();
+            }
+        });
+
+        dubaiRB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateForm();
+            }
+        });
+
+        sharjahRB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateForm();
+            }
+        });
+
+        alainRB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateForm();
+            }
+        });
     }
 
     private class ValidationWatcher implements TextWatcher {
@@ -88,7 +147,21 @@ public class EditProfileActivity extends AppCompatActivity {
         String email = emailET.getText().toString().trim();
         String pass = passwordET.getText().toString().trim();
         String ageStr = ageET.getText().toString().trim();
-        String city = cityET.getText().toString().trim();
+        String city = null;
+
+        if (abudhabiRB.isChecked()) city = "Abu Dhabi";
+        else if (dubaiRB.isChecked()) city = "Dubai";
+        else if (sharjahRB.isChecked()) city = "Sharjah";
+        else if (alainRB.isChecked()) city = "Al Ain";
+
+        if (city == null)
+        {
+            cityValidationTV.setText("Please select a city.");
+            isValid = false;
+
+        } else {
+            cityValidationTV.setText("");
+        }
 
         // First name
         if (fname.isEmpty() || fname.contains("'")) {
@@ -149,13 +222,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }
 
-        // City
-        if (city.isEmpty() || city.contains("'")) {
-            cityValidationTV.setText("Invalid city name.");
-            isValid = false;
-        } else {
-            cityValidationTV.setText("");
-        }
 
         saveBTN.setEnabled(isValid);
     }
@@ -213,10 +279,18 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         int age = Integer.parseInt(ageStr);
 
-        String city = cityET.getText().toString().trim();
-        if (city.isEmpty()) {
-            city = getIntent().getStringExtra("city");
+        String city = null;
+
+        if (abudhabiRB.isChecked()) city = "Abu Dhabi";
+        else if (dubaiRB.isChecked()) city = "Dubai";
+        else if (sharjahRB.isChecked()) city = "Sharjah";
+        else if (alainRB.isChecked()) city = "Al Ain";
+
+        if (city == null) {
+            Toast.makeText(this, "Please select a city.", Toast.LENGTH_SHORT).show();
+            return;
         }
+
 
         currentId = SessionManager.getInstance().getCurrentUserId();
         DatabaseManager db = DatabaseManager.getInstance(EditProfileActivity.this);
